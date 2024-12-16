@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
-import Home from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
+import Home from "@pages/HomePage";
+import NotFoundPage from "@pages/NotFoundPage";
 
 function App() {
   return (
