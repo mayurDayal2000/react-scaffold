@@ -1,12 +1,14 @@
-import reactLogo from "./assets/react.svg";
 import "./App.css";
+import { Route, Routes } from "react-router";
+import Home from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
-    <>
-      <h1>Welcome to My World!</h1>
-      <img src={reactLogo} className="logo react" alt="React logo" />
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
