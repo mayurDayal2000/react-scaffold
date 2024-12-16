@@ -1,0 +1,49 @@
+name: Bump Version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Bump version
+        run: |
+          version=$(jq -r '.version' package.json)
+          major=$(echo $version | cut -d '.' -f 1)
+          minor=$(echo $version | cut -d '.' -f 2)
+          patch=$(echo $version | cut -d '.' -f 3)
+
+          if [ $patch -lt 9 ]; then
+            patch=$((patch + 1))
+          else
+            patch=0
+            if [ $minor -lt 9 ]; then
+              minor=$((minor + 1))
+            else
+              minor=0
+              major=$((major + 1))
+            fi
+          fi
+
+          new_version="$major.$minor.$patch"
+          echo $new_version > new_version.txt
+          jq ".version = \"$new_version\"" package.json > temp.json && mv temp.json package.json
+
+      - name: Commit changes
+        run: |
+          new_version=$(cat new_version.txt)
+          git config --local user.email "github-actions[bot]@users.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add package.json
+          git commit -m "Bump version to $new_version"
+
+      - name: Push changes customly
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push origin main
