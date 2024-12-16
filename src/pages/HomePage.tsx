@@ -1,10 +1,10 @@
-import reactLogo from "@assets/react.svg";
+import ReactLogo from "@assets/react.svg?react";
 
 function HomePage() {
   return (
     <>
       <h1>Welcome to My World!</h1>
-      <img src={reactLogo} className="logo react" alt="React logo" />
+      <ReactLogo className="logo react" />
     </>
   );
 }
