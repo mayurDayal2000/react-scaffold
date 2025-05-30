@@ -2,9 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import svgr from "vite-plugin-svgr";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [react(), svgr(), tailwindcss()],
   resolve: {
     alias: {
       "@pages": resolve(__dirname, "src/pages"),
